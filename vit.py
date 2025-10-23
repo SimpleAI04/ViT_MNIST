@@ -101,7 +101,7 @@ criterion = nn.CrossEntropyLoss()
 
 for epoch in range(5):
     model.train()
-    total_loss = 0
+    train_loss = 0
     correct_epoch = 0
     total_epoch = 0
 
@@ -114,12 +114,12 @@ for epoch in range(5):
         loss.backward()
         optimizer.step()
 
-        total_loss+=loss.item()
+        train_loss+=loss.item()
         preds = outputs.argmax(dim=1)
 
         correct = (preds == labels).sum().item()
         correct_epoch += correct
         total_epoch += labels.size(0)
-
+    total_loss = train_loss/len(train_data) 
     epoch_acc = 100.0 * correct_epoch / total_epoch
     print(f"Epoch {epoch+1} Train Loss = {total_loss:.4f} | Train Accuracy = {epoch_acc:.4f}")
